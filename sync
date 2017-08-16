@@ -1,0 +1,23 @@
+cp target/distribute/pcunite.war /was/app/EnterpriseApps/PCUniteEAR.ear/pcunite.war
+cp -pr target/distribute/webdocs/* /was/app/EnterpriseDocs/ugmiguide
+cd /was/app/EnterpriseApps/PCUniteEAR.ear/pcunite.war
+rm -rf META-INF
+rm -rf WEB-INF
+/usr/java6/bin/jar -xvf pcunite.war
+rm pcunite.war
+
+
+Predefined para
+
+REMOTE_HOST=$REMOTE_HOST
+miguidewebhome=$miguidewebhome
+BUILD_SELECTOR=$BUILD_SELECTOR
+BRANCH=$BRANCH
+
+
+rsync -avz target/distribute/webdocs/ $REMOTE_HOST:$miguidewebhome
+
+
+rsync -avz --delete target/distribute/webdocs/properties/servlets $REMOTE_HOST:$miguidewebhome/properties/servlets
+rsync -avz --delete target/distribute/webdocs/properties/servletIPC $REMOTE_HOST:$miguidewebhome/properties/servletIPC
+rsync -avz --delete target/distribute/webdocs/properties/edi $REMOTE_HOST:$miguidewebhome/properties/edi
